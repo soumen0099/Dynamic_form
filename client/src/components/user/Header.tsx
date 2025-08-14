@@ -129,10 +129,13 @@ export const Header = ({ settings, scrollToSection }: HeaderProps) => {
                                     );
                                 })}
 
-                            {/* Special CTA Button */}
+                            {/* WhatsApp CTA Button */}
                             <div className="ml-4 pl-4 border-l border-gray-200">
-                                <button
-                                    className="text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                                <a
+                                    href="https://wa.me/+918436618251?text=Hi,%20I'm%20interested%20in%20learning%20more%20about%20your%20courses."
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl inline-flex items-center"
                                     style={{
                                         background: `linear-gradient(135deg, ${settings.theme?.primaryColor || 'var(--primary-color)'}, ${settings.theme?.accentColor || 'var(--accent-color)'})`
                                     }}
@@ -143,9 +146,9 @@ export const Header = ({ settings, scrollToSection }: HeaderProps) => {
                                         e.currentTarget.style.boxShadow = `0 5px 15px ${settings.theme?.primaryColor || 'var(--primary-color)'}30`;
                                     }}
                                 >
-                                    <Phone className="inline mr-2" size={16} />
+                                    <Phone className="mr-2" size={16} />
                                     Get Started
-                                </button>
+                                </a>
                             </div>
                         </nav>
                     )}
