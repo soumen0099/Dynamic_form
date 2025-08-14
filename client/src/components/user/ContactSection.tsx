@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,18 +7,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin, Send, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { contactService } from '@/API/services/contactService';
-
-interface Contact {
-    _id: string;
-    name: string;
-    email: string;
-    phone: string;
-    courseDescription: string;
-    status: string;
-    notes: string;
-    createdAt: string;
-    updatedAt: string;
-}
 
 interface ContactSectionProps {
     settings: any;
@@ -38,42 +26,7 @@ export const ContactSection = ({ settings }: ContactSectionProps) => {
         phone: '',
         courseDescription: ''
     });
-    const [contacts, setContacts] = useState<Contact[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    useEffect(() => {
-        const fetchContacts = async () => {
-            try {
-                console.log('Attempting to fetch contacts...');
-                const response = await contactService.getAllContacts();
-                
-                if (response?.data?.contacts) {
-                    console.log('Setting contacts:', response.data.contacts);
-                    setContacts(response.data.contacts);
-                } else {
-                    console.log('No contacts data in response:', response);
-                    toast.error('No contacts data found');
-                }
-            } catch (error: any) {
-                console.error('Error fetching contacts:', error);
-                console.error('Error response:', error.response?.data);
-                toast.error(error.response?.data?.message || 'Failed to load contacts');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        // Check if we have authentication token
-        const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-        if (!token) {
-            console.log('No authentication token found');
-            setIsLoading(false);
-            return;
-        }
-
-        fetchContacts();
-    }, []);
 
     const handleInputChange = (field: keyof ContactFormData, value: string) => {
         setFormData(prev => ({
