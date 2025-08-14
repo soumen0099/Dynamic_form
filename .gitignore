@@ -1,0 +1,74 @@
+# Client-side dependencies and build files
+client/node_modules/
+client/dist/
+client/.vite/
+client/build/
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+client/.env.local
+client/.env.development
+client/.env.production
+client/.env.*
+
+# Server-side dependencies and build files
+server/node_modules/
+server/dist/
+server/build/
+server/npm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+
+server/.env.local
+server/.env.development
+server/.env.production
+server/.env.*
+
+# IDE and Editor files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+*.js.map
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+
+# Uploaded files and media
+server/public/assets/*
+!server/public/assets/.gitkeep
+
+
+
+# Development
+*.local
+.history/
+.temp/
+
+# Cache
+.cache/
+.npm/
+.eslintcache
