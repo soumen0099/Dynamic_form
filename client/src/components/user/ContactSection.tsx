@@ -273,50 +273,6 @@ export const ContactSection = ({ settings }: ContactSectionProps) => {
                         </Card>
                     )}
                 </div>
-
-                {/* Contacts List */}
-                <div className="mt-16">
-                    <h3 className="text-2xl font-semibold mb-6" style={{ color: settings?.theme?.primaryColor || '#059669' }}>
-                        Recent Contacts
-                    </h3>
-                    {isLoading ? (
-                        <div className="flex justify-center">
-                            <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
-                        </div>
-                    ) : contacts.length > 0 ? (
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {contacts.map((contact) => (
-                                <Card key={contact._id} className="shadow-sm">
-                                    <CardContent className="p-6">
-                                        <h4 className="font-semibold text-lg mb-2">{contact.name}</h4>
-                                        <div className="space-y-2 text-sm text-gray-600">
-                                            <p className="flex items-center">
-                                                <Mail className="w-4 h-4 mr-2" />
-                                                {contact.email}
-                                            </p>
-                                            <p className="flex items-center">
-                                                <Phone className="w-4 h-4 mr-2" />
-                                                {contact.phone}
-                                            </p>
-                                            {contact.courseDescription && (
-                                                <p className="mt-3 pt-3 border-t">
-                                                    <span className="font-medium">Course Interest:</span>
-                                                    <br />
-                                                    {contact.courseDescription}
-                                                </p>
-                                            )}
-                                            <p className="text-xs text-gray-500 mt-2">
-                                                Status: <span className="capitalize">{contact.status}</span>
-                                            </p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-gray-500 text-center">No contacts found.</p>
-                    )}
-                </div>
             </div>
         </section>
     );
