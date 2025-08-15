@@ -15,6 +15,7 @@ import {
     StatisticsSection
 } from '../components/user';
 import { Chatbot } from '../components/ui/chatbot';
+import CookieConsent from '../components/ui/CookieConsent';
 
 function Home() {
     const [settings, setSettings] = useState<BranchSettings | null>(null);
@@ -171,6 +172,7 @@ function Home() {
                     primaryColor={settings?.theme?.primaryColor}
                     siteName={settings?.header?.siteName}
                 />
+                <CookieConsent />
             </div>
         </>
     );

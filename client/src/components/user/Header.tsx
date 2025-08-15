@@ -1,4 +1,5 @@
-import { BookOpen, Phone } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BookOpen, Phone, X, Menu } from 'lucide-react';
 import type { BranchSettings } from '../../API/services/settingsService';
 
 interface HeaderProps {
@@ -7,6 +8,37 @@ interface HeaderProps {
 }
 
 export const Header = ({ settings, scrollToSection }: HeaderProps) => {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Close mobile menu when screen size changes to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768) { // md breakpoint
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Close mobile menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            
+            if (mobileMenu && !mobileMenu.contains(event.target as Node) && 
+                mobileMenuButton && !mobileMenuButton.contains(event.target as Node)) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        if (isMobileMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMobileMenuOpen]);
     return (
         <header className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-100">
             <div className="container mx-auto px-6">
@@ -156,26 +188,90 @@ export const Header = ({ settings, scrollToSection }: HeaderProps) => {
                     {/* Mobile Menu Button - Enhanced */}
                     <div className="md:hidden">
                         <button
+                            id="mobile-menu-button"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className="p-3 rounded-xl transition-all duration-300 transform hover:scale-110"
                             style={{
                                 background: `linear-gradient(135deg, ${settings.theme?.primaryColor || 'var(--primary-color)'}20, ${settings.theme?.accentColor || 'var(--accent-color)'}20)`
                             }}
                         >
-                            <div className="w-6 h-6 flex flex-col justify-around">
-                                <span
-                                    className="block h-0.5 w-6 rounded-full transition-all duration-300"
-                                    style={{ backgroundColor: settings.theme?.primaryColor || 'var(--primary-color)' }}
-                                ></span>
-                                <span
-                                    className="block h-0.5 w-6 rounded-full transition-all duration-300"
-                                    style={{ backgroundColor: settings.theme?.primaryColor || 'var(--primary-color)' }}
-                                ></span>
-                                <span
-                                    className="block h-0.5 w-6 rounded-full transition-all duration-300"
-                                    style={{ backgroundColor: settings.theme?.primaryColor || 'var(--primary-color)' }}
-                                ></span>
-                            </div>
+                            {isMobileMenuOpen ? (
+                                <X 
+                                    size={24} 
+                                    style={{ color: settings.theme?.primaryColor || 'var(--primary-color)' }}
+                                />
+                            ) : (
+                                <Menu 
+                                    size={24} 
+                                    style={{ color: settings.theme?.primaryColor || 'var(--primary-color)' }}
+                                />
+                            )}
                         </button>
+                    </div>
+                </div>
+
+                {/* Mobile Menu */}
+                <div
+                    id="mobile-menu"
+                    className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+                >
+                    <div className="px-4 pt-2 pb-4 space-y-2">
+                        {settings.header?.navigation
+                            ?.filter(nav => nav.isActive)
+                            .sort((a, b) => a.order - b.order)
+                            .map((navItem, index) => {
+                                const isScrollLink = navItem.url.startsWith('#') ||
+                                    navItem.title.toLowerCase() === 'home' ||
+                                    navItem.title.toLowerCase() === 'about' ||
+                                    navItem.title.toLowerCase() === 'services' ||
+                                    navItem.title.toLowerCase() === 'contact';
+
+                                if (isScrollLink) {
+                                    let sectionId = navItem.url.replace('#', '');
+
+                                    if (navItem.title.toLowerCase() === 'home') sectionId = 'hero';
+                                    if (navItem.title.toLowerCase() === 'about') sectionId = 'about';
+                                    if (navItem.title.toLowerCase() === 'services') sectionId = 'services';
+                                    if (navItem.title.toLowerCase() === 'contact') sectionId = 'contact';
+
+                                    return (
+                                        <button
+                                            key={index}
+                                            onClick={() => {
+                                                scrollToSection(sectionId);
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                            className="block w-full text-left px-4 py-3 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors duration-200"
+                                        >
+                                            {navItem.title}
+                                        </button>
+                                    );
+                                }
+
+                                return (
+                                    <a
+                                        key={index}
+                                        href={navItem.url}
+                                        className="block px-4 py-3 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors duration-200"
+                                    >
+                                        {navItem.title}
+                                    </a>
+                                );
+                            })}
+
+                        {/* Mobile WhatsApp Button */}
+                        <a
+                            href="https://wa.me/+918436618251?text=Hi,%20I'm%20interested%20in%20learning%20more%20about%20your%20courses."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full text-center mt-4 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300"
+                            style={{
+                                background: `linear-gradient(135deg, ${settings.theme?.primaryColor || 'var(--primary-color)'}, ${settings.theme?.accentColor || 'var(--accent-color)'})`
+                            }}
+                        >
+                            <Phone className="inline-block mr-2" size={16} />
+                            Get Started
+                        </a>
                     </div>
                 </div>
             </div>

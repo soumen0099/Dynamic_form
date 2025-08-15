@@ -92,55 +92,6 @@ export const ContactSection = ({ settings }: ContactSectionProps) => {
                 </div>
 
                 <div className="grid lg:grid-cols-2 gap-12 items-start">
-                    {/* Contact Information */}
-                    <div className="space-y-8">
-                        <div>
-                            <h3 className="text-2xl font-semibold mb-6" style={{ color: settings?.theme?.primaryColor || '#059669' }}>
-                                Get In Touch
-                            </h3>
-                            <p className="text-gray-600 mb-8">
-                                Ready to start your learning journey? Contact us today and our team will help you choose the perfect course for your career goals.
-                            </p>
-                        </div>
-
-                        <div className="space-y-6">
-                            {settings?.footer?.contact?.address && (
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: `${settings?.theme?.primaryColor || '#059669'}20` }}>
-                                        <MapPin size={20} style={{ color: settings?.theme?.primaryColor || '#059669' }} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Address</h4>
-                                        <p className="text-gray-600">{settings.footer.contact.address}</p>
-                                    </div>
-                                </div>
-                            )}
-
-                            {settings?.footer?.contact?.phone && (
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: `${settings?.theme?.primaryColor || '#059669'}20` }}>
-                                        <Phone size={20} style={{ color: settings?.theme?.primaryColor || '#059669' }} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Phone</h4>
-                                        <p className="text-gray-600">{settings.footer.contact.phone}</p>
-                                    </div>
-                                </div>
-                            )}
-
-                            {settings?.footer?.contact?.email && (
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: `${settings?.theme?.primaryColor || '#059669'}20` }}>
-                                        <Mail size={20} style={{ color: settings?.theme?.primaryColor || '#059669' }} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Email</h4>
-                                        <p className="text-gray-600">{settings.footer.contact.email}</p>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
 
                     {/* Contact Form - Only show if admin enables it */}
                     {contactSettings?.showForm !== false && (

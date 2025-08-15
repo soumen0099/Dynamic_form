@@ -11,6 +11,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['@tanstack/react-query', '@tanstack/react-query-devtools'],
+  },
   build: {
     chunkSizeWarningLimit: 5000,
   },
