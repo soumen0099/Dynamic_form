@@ -8,6 +8,7 @@ const createFormData = async (req, res, next) => {
     try {
         const { formType } = req.body;
         console.log("REQ.BODY:", req.body);
+        console.log("REQ.FILES:", req.files);
 
         if (!formType) {
             throw new ApiError(400, "formType is required");
@@ -155,17 +156,40 @@ const createFormData = async (req, res, next) => {
         }
 
         if (formType === 'course') {
-            // Auto-generate course image based on course name
-            if (bodyData.courseName) {
-                const courseName = bodyData.courseName.toString().toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 10);
-                // Use Picsum API with course name as seed for consistent image generation
-                bodyData.courseImage = `https://picsum.photos/seed/${courseName}/400/300`;
-            }
-
-            // If manual image upload is provided, override the auto-generated one
+            console.log("=== COURSE IMAGE DEBUG ===");
+            console.log("All files received:", req.files);
+            console.log("courseImage file:", req.files?.courseImage);
+            console.log("courseImage[0]:", req.files?.courseImage?.[0]);
+            
+            // Check all possible file field names
+            console.log("All file field names:", Object.keys(req.files || {}));
+            
             if (req.files?.courseImage?.[0]) {
                 bodyData.courseImage = `/assets/${req.files.courseImage[0].filename}`;
+                console.log("✅ Course image set to:", bodyData.courseImage);
+            } else {
+                console.log("❌ No course image file found");
+                // Try to find any image file
+                const imageFields = Object.keys(req.files || {}).filter(key => 
+                    key.toLowerCase().includes('image') || 
+                    key.toLowerCase().includes('photo') || 
+                    key.toLowerCase().includes('file')
+                );
+                console.log("Found image-related fields:", imageFields);
+                
+                // If we found any files, use the first one
+                if (req.files && Object.keys(req.files).length > 0) {
+                    const firstFileKey = Object.keys(req.files)[0];
+                    const firstFile = req.files[firstFileKey];
+                    if (firstFile && firstFile[0] && firstFile[0].filename) {
+                        bodyData.courseImage = `/assets/${firstFile[0].filename}`;
+                        console.log("✅ Using first available file:", firstFileKey, "->", bodyData.courseImage);
+                    } else {
+                        console.log("❌ First file doesn't have expected structure:", firstFile);
+                    }
+                }
             }
+            console.log("=== END COURSE IMAGE DEBUG ===");
         }
 
         if (formType === 'branch') {
@@ -185,11 +209,19 @@ const createFormData = async (req, res, next) => {
                 value: value,
             }));
 
+        console.log("=== DATABASE SAVE DEBUG ===");
+        console.log("bodyData:", bodyData);
+        console.log("fieldsData to save:", fieldsData);
+        console.log("courseImage in fieldsData:", fieldsData.find(f => f.name === 'courseImage'));
+
         // Save to DB
         const saved = await DynamicFormData.create({
             formType,
             fieldsData,
         });
+
+        console.log("✅ Saved to database:", saved);
+        console.log("=== END DATABASE SAVE DEBUG ===");
 
         return res
             .status(201)

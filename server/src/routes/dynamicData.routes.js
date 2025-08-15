@@ -10,7 +10,14 @@ import { upload } from "../middlewares/multer.middleware.js";
 
 const router = express.Router();
 
-router.post("/", upload.any(), createFormData); // 👈 FIXED LINE
+router.post("/", upload.fields([
+    { name: 'courseImage', maxCount: 1 },
+    { name: 'studentPhoto', maxCount: 1 },
+    { name: 'signature', maxCount: 1 },
+    { name: 'documents', maxCount: 1 },
+    { name: 'branchDocument1', maxCount: 1 },
+    { name: 'branchDocument2', maxCount: 1 }
+]), createFormData);
 
 router.put("/:id", upload.any(), updateFormData); // also fix this
 
