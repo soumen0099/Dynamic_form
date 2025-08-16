@@ -105,16 +105,12 @@ const data = {
             icon: BookOpen,
             items: [
                 {
-                    title: "Genesis",
-                    url: "#",
+                    title: "Create Exam",
+                    url: "/admin/ExamResultPage",
                 },
                 {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
+                    title: "Previous Exams",
+                    url: "/admin/ExamListPage",
                 },
             ],
         },
@@ -238,6 +234,7 @@ export default function Page({ children }: PageProps) {
     if (selectedSection === "Add Students") formToShow = "student";
     if (selectedSection === "Add Branch") formToShow = "branch";
     if (selectedSection === "Add Course") formToShow = "course";
+    if (selectedSection === "Create Exam" || selectedSection === "Exam & Result Management" || window.location.pathname === "/admin/ExamResultPage") formToShow = "examResult";
     return (
         <SidebarProvider>
             <Sidebar collapsible="icon">
@@ -259,7 +256,6 @@ export default function Page({ children }: PageProps) {
                                                 onClick={() => setSelectedSection(item.title)}
                                             >
                                                 {item.icon && <item.icon />}
-
                                                 {item.items && item.items.length > 0 ? (
                                                     <>
                                                         <span>{item.title}</span>

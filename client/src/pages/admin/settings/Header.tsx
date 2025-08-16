@@ -31,6 +31,7 @@ export default function HeaderSettings() {
       { title: "About", url: "/about", order: 2, isActive: true },
       { title: "Services", url: "/services", order: 3, isActive: true },
       { title: "Contact", url: "/contact", order: 4, isActive: true },
+      { title: "Exam & Results", url: "/admin/ExamResultPage", order: 5, isActive: true },
     ],
     contactInfo: {
       phone: "",
@@ -73,6 +74,7 @@ export default function HeaderSettings() {
         { title: "About", url: "/about", order: 2, isActive: true },
         { title: "Services", url: "/services", order: 3, isActive: true },
         { title: "Contact", url: "/contact", order: 4, isActive: true },
+        { title: "Exam & Results", url: "/admin/ExamResultPage", order: 5, isActive: true },
       ],
       contactInfo: {
         phone: "",

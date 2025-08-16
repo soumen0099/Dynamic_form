@@ -90,20 +90,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { 
       key: 'student' as FormType, 
       label: 'Student Form', 
-      icon: <Edit3 className="h-5 w-5" />,
+      icon: <Edit3 className="h-5 w-5" />, 
       description: 'Configure student registration fields'
     },
     { 
       key: 'course' as FormType, 
       label: 'Course Form', 
-      icon: <BookOpen className="h-5 w-5" />,
+      icon: <BookOpen className="h-5 w-5" />, 
       description: 'Configure course creation fields'
     },
     { 
       key: 'branch' as FormType, 
       label: 'Branch Form', 
-      icon: <Building className="h-5 w-5" />,
+      icon: <Building className="h-5 w-5" />, 
       description: 'Configure branch setup fields'
+    },
+    {
+      key: 'examResult' as FormType,
+      label: 'Exam & Result Form',
+      icon: <BookOpen className="h-5 w-5" />,
+      description: 'Configure exam and result management fields'
     },
     // Add custom forms
     ...customForms.map(form => ({

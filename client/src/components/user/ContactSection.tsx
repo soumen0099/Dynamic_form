@@ -37,7 +37,7 @@ export const ContactSection = ({ settings }: ContactSectionProps) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         // Basic validation
         if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
             toast.error('Please fill in all required fields');
@@ -54,9 +54,9 @@ export const ContactSection = ({ settings }: ContactSectionProps) => {
         try {
             setIsSubmitting(true);
             await contactService.submitContactForm(formData);
-            
+
             toast.success('Thank you for your interest! We will contact you soon.');
-            
+
             // Reset form
             setFormData({
                 name: '',
@@ -91,11 +91,11 @@ export const ContactSection = ({ settings }: ContactSectionProps) => {
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-12 items-start">
+                <div className="flex justify-center items-center">
 
                     {/* Contact Form - Only show if admin enables it */}
                     {contactSettings?.showForm !== false && (
-                        <Card className="shadow-lg border-0">
+                        <Card className="shadow-lg border-0 w-full max-w-2xl mx-auto">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-bold" style={{ color: settings?.theme?.primaryColor || '#059669' }}>
                                     Send us a Message

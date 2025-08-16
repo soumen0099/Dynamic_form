@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Users, GraduationCap, TrendingUp, Building, BookOpen, MapPin, BarChart3 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getDynamicFormDataAPI } from "@/API/services/studentService";
 
@@ -233,7 +234,7 @@ function Dashboard() {
         </div>
 
         {/* Recent Data Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 w-full">
           {/* Recent Students */}
           <Card>
             <CardHeader>
@@ -346,8 +347,40 @@ function Dashboard() {
                 )}
               </div>
             </CardContent>
+        </Card>
+
+          {/* Exam & Results Panel */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-green-600" />
+                Exam & Results
+              </CardTitle>
+              <CardDescription>Manage exams and results</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* Directly render the ExamResultPanel form here, like other forms */}
+              {window.location.pathname === "/admin/ExamResultPage" ? (
+                <div className="mt-4">
+                  {/* Import and render the ExamResultPanel component */}
+                  {/* @ts-ignore */}
+                  {require("./ExamResultPanel").default()}
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <span className="text-sm text-gray-600">Create and view exams, enter results, and manage exam data.</span>
+                  <Button
+                    className="bg-green-600 hover:bg-green-700 text-white mt-2"
+                    onClick={() => window.location.href = "/admin/ExamResultPage"}
+                  >
+                    Go to Exam & Results Panel
+                  </Button>
+                </div>
+              )}
+            </CardContent>
           </Card>
-        </div>
+
+      </div>
 
         {/* Summary Statistics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 w-full">

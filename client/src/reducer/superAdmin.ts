@@ -1,31 +1,23 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-export interface FieldConfig {
-  id: string;
-  name: string;
-  label: string;
-  description: string;
-  enabled: boolean;
-  position: number;
-  category: 'basic' | 'details' | 'status' | 'contact';
-  iconName: string;
-  inputType: 'text' | 'email' | 'tel' | 'number' | 'date' | 'select' | 'textarea' | 'checkbox' | 'radio' | 'file';
-  options?: string[];
-}
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { FieldConfig } from "@/pages/superAdmin/types";
 
 export interface SuperAdminState {
   studentFields: FieldConfig[];
   courseFields: FieldConfig[];
   branchFields: FieldConfig[];
+  examResultFields: FieldConfig[];
   loading: boolean;
   error: string | null;
-  activeForm: 'student' | 'course' | 'branch';
+  activeForm: 'student' | 'course' | 'branch' | 'examResult';
 }
 
 const initialState: SuperAdminState = {
   studentFields: [],
   courseFields: [],
   branchFields: [],
+  examResultFields: [],
   loading: false,
   error: null,
   activeForm: 'student',
@@ -50,7 +42,12 @@ const superAdminSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    setActiveForm(state, action: PayloadAction<'student' | 'course' | 'branch'>) {
+    setExamResultFields(state, action: PayloadAction<FieldConfig[]>) {
+      state.examResultFields = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    setActiveForm(state, action: PayloadAction<'student' | 'course' | 'branch' | 'examResult'>) {
       state.activeForm = action.payload;
     },
     setLoading(state, action: PayloadAction<boolean>) {
@@ -60,7 +57,6 @@ const superAdminSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    // Add individual field update actions
     updateStudentField(state, action: PayloadAction<{ fieldId: string; updates: Partial<FieldConfig> }>) {
       const { fieldId, updates } = action.payload;
       const fieldIndex = state.studentFields.findIndex(field => field.id === fieldId);
@@ -82,19 +78,28 @@ const superAdminSlice = createSlice({
         state.branchFields[fieldIndex] = { ...state.branchFields[fieldIndex], ...updates };
       }
     },
+    updateExamResultField(state, action: PayloadAction<{ fieldId: string; updates: Partial<FieldConfig> }>) {
+      const { fieldId, updates } = action.payload;
+      const fieldIndex = state.examResultFields.findIndex(field => field.id === fieldId);
+      if (fieldIndex !== -1) {
+        state.examResultFields[fieldIndex] = { ...state.examResultFields[fieldIndex], ...updates };
+      }
+    },
   },
 });
 
-export const { 
-  setStudentFields, 
-  setCourseFields, 
-  setBranchFields, 
-  setActiveForm, 
-  setLoading, 
+export const {
+  setStudentFields,
+  setCourseFields,
+  setBranchFields,
+  setExamResultFields,
+  setActiveForm,
+  setLoading,
   setError,
   updateStudentField,
   updateCourseField,
-  updateBranchField
+  updateBranchField,
+  updateExamResultField
 } = superAdminSlice.actions;
 
 export default superAdminSlice.reducer;
