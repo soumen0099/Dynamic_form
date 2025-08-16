@@ -1,4 +1,3 @@
-
 import DynamicFormData from "../models/dynamicData.model.js";
 import { ApiError } from "../utils/apiArror.js";
 import { ApiResponse } from "../utils/apiResponse.js";
@@ -152,6 +151,13 @@ const createFormData = async (req, res, next) => {
             }
             if (req.files?.documents?.[0]) {
                 bodyData.documents = `/assets/${req.files.documents[0].filename}`;
+            }
+        }
+
+        // Fix: Save examPaper file for exam/examResult
+        if (formType === 'exam' || formType === 'examResult') {
+            if (req.files?.examPaper?.[0]) {
+                bodyData.examPaper = `/assets/${req.files.examPaper[0].filename}`;
             }
         }
 

@@ -16,7 +16,8 @@ router.post("/", upload.fields([
     { name: 'signature', maxCount: 1 },
     { name: 'documents', maxCount: 1 },
     { name: 'branchDocument1', maxCount: 1 },
-    { name: 'branchDocument2', maxCount: 1 }
+    { name: 'branchDocument2', maxCount: 1 },
+    { name: 'examPaper', maxCount: 1 }
 ]), createFormData);
 
 router.put("/:id", upload.any(), updateFormData); // also fix this

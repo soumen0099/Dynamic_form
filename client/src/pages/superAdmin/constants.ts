@@ -689,19 +689,6 @@ export const defaultExamResultFields: FieldConfig[] = [
         searchable: false
     },
     {
-        id: 'course',
-        name: 'course',
-        label: 'Course/Subject',
-        description: 'Related course or subject',
-        enabled: true,
-        position: 3,
-        category: 'exam',
-        iconName: 'GraduationCap',
-        inputType: 'select',
-        options: [],
-        searchable: true
-    },
-    {
         id: 'examDate',
         name: 'examDate',
         label: 'Exam Date',
