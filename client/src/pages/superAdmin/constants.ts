@@ -713,12 +713,23 @@ export const defaultExamResultFields: FieldConfig[] = [
         inputType: 'date'
     },
     {
+        id: 'examPaper',
+        name: 'examPaper',
+        label: 'Exam Paper',
+        description: 'Upload exam paper file',
+        enabled: true,
+        position: 5,
+        category: 'exam',
+        iconName: 'File',
+        inputType: 'file'
+    },
+    {
         id: 'totalMarks',
         name: 'totalMarks',
         label: 'Total Marks',
         description: 'Maximum marks',
         enabled: true,
-        position: 5,
+        position: 6,
         category: 'exam',
         iconName: 'BookOpen',
         inputType: 'number'
@@ -729,7 +740,7 @@ export const defaultExamResultFields: FieldConfig[] = [
         label: 'Passing Marks',
         description: 'Minimum marks to pass',
         enabled: true,
-        position: 6,
+        position: 7,
         category: 'exam',
         iconName: 'BookOpen',
         inputType: 'number'
@@ -740,93 +751,9 @@ export const defaultExamResultFields: FieldConfig[] = [
         label: 'Exam Venue',
         description: 'Location of the exam',
         enabled: true,
-        position: 7,
+        position: 8,
         category: 'exam',
         iconName: 'MapPin',
         inputType: 'text'
     },
-    // Result Management
-    {
-        id: 'studentName',
-        name: 'studentName',
-        label: 'Student Name',
-        description: 'Name of the student',
-        enabled: true,
-        position: 8,
-        category: 'result',
-        iconName: 'User',
-        inputType: 'select',
-        options: [],
-        searchable: true
-    },
-    {
-        id: 'registrationNumber',
-        name: 'registrationNumber',
-        label: 'Registration Number',
-        description: 'Student registration number',
-        enabled: true,
-        position: 9,
-        category: 'result',
-        iconName: 'User',
-        inputType: 'text'
-    },
-    {
-        id: 'marksObtained',
-        name: 'marksObtained',
-        label: 'Marks Obtained',
-        description: 'Marks scored by student',
-        enabled: true,
-        position: 10,
-        category: 'result',
-        iconName: 'BookOpen',
-        inputType: 'number'
-    },
-    {
-        id: 'grade',
-        name: 'grade',
-        label: 'Grade',
-        description: 'Grade achieved',
-        enabled: true,
-        position: 11,
-        category: 'result',
-        iconName: 'BookOpen',
-        inputType: 'select',
-        options: ['A', 'B', 'C', 'D', 'F'],
-        searchable: false
-    },
-    {
-        id: 'resultStatus',
-        name: 'resultStatus',
-        label: 'Result Status',
-        description: 'Pass/Fail/Absent',
-        enabled: true,
-        position: 12,
-        category: 'result',
-        iconName: 'UserCheck',
-        inputType: 'select',
-        options: ['Pass', 'Fail', 'Absent'],
-        searchable: false
-    },
-    {
-        id: 'resultDate',
-        name: 'resultDate',
-        label: 'Result Date',
-        description: 'Date of result declaration',
-        enabled: true,
-        position: 13,
-        category: 'result',
-        iconName: 'Calendar',
-        inputType: 'date'
-    },
-    {
-        id: 'remarks',
-        name: 'remarks',
-        label: 'Remarks',
-        description: 'Additional remarks',
-        enabled: true,
-        position: 14,
-        category: 'result',
-        iconName: 'BookOpen',
-        inputType: 'textarea'
-    }
 ]

@@ -29,6 +29,7 @@ const ExamResultPanel: React.FC = () => {
                     }))
                     : [];
                 setCourses(courseOptions);
+                console.log(courseOptions)
             })
             .catch(() => {
                 setCourses([]);
@@ -45,23 +46,70 @@ const ExamResultPanel: React.FC = () => {
                     <Separator />
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-4">
-                        {fields.map((field) => (
-                            <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
-                                <span className="font-semibold w-48">{field.label}</span>
-                                {field.name === "course" || field.name === "courseName" || field.label.toLowerCase().includes("course") || field.label.toLowerCase().includes("subject") ? (
-                                    <select className="border rounded px-2 py-1" defaultValue="">
-                                        <option value="" disabled>Select course/subject</option>
-                                        {courses.map((course: any) => (
-                                            <option key={course.value} value={course.value}>{course.label}</option>
-                                        ))}
-                                    </select>
-                                ) : (
-                                    <span className="text-gray-600 dark:text-gray-400">{field.description}</span>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                    <form className="grid gap-4">
+                        {fields.map((field) => {
+                            if (field.inputType === "select" && field.name === "course") {
+                                // Course select
+                                return (
+                                    <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
+                                        <span className="font-semibold w-48">{field.label}</span>
+                                        <select className="border rounded px-2 py-1" defaultValue="">
+                                            <option value="" disabled>Select course/subject</option>
+                                            {courses.map((course: any) => (
+                                                <option key={course.value} value={course.value}>{course.label}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                );
+                            }
+                            if (field.inputType === "select" && field.options && field.options.length > 0) {
+                                // Other select (e.g. examType)
+                                return (
+                                    <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
+                                        <span className="font-semibold w-48">{field.label}</span>
+                                        <select className="border rounded px-2 py-1" defaultValue="">
+                                            <option value="" disabled>Select {field.label.toLowerCase()}</option>
+                                            {field.options.map((opt) => (
+                                                <option key={opt} value={opt}>{opt}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                );
+                            }
+                            if (field.inputType === "date") {
+                                return (
+                                    <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
+                                        <span className="font-semibold w-48">{field.label}</span>
+                                        <input type="date" className="border rounded px-2 py-1" />
+                                    </div>
+                                );
+                            }
+                            if (field.inputType === "number") {
+                                return (
+                                    <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
+                                        <span className="font-semibold w-48">{field.label}</span>
+                                        <input type="number" className="border rounded px-2 py-1" placeholder={field.label} />
+                                    </div>
+                                );
+                            }
+                            if (field.inputType === "file") {
+                                // Exam paper upload
+                                return (
+                                    <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
+                                        <span className="font-semibold w-48">{field.label}</span>
+                                        <input type="file" className="border rounded px-2 py-1" accept=".pdf,.doc,.docx,.jpg,.png" />
+                                    </div>
+                                );
+                            }
+                            // Default: text
+                            return (
+                                <div key={field.id} className="flex items-center gap-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-900">
+                                    <span className="font-semibold w-48">{field.label}</span>
+                                    <input type="text" className="border rounded px-2 py-1" placeholder={field.label} />
+                                </div>
+                            );
+                        })}
+                    </form>
                     <div className="flex justify-end mt-6">
                         <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 font-semibold">
                             <Plus className="h-5 w-5 mr-2" /> Create New Exam
